@@ -1,6 +1,43 @@
 <!doctype html>
 <html>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        h1 {    
+                
+                color : Orange ;
+                 margin-left:  400px;
+                 margin-top:  25px;
+                 margin-right: 50px;
+                 
+                }
+            h2 { 
+                color : Orange ;
+                 margin-left:  500px;
+                 margin-top:  25px;
+                 margin-right: 50px;
+                 
+            }
+        body {
+            background-color: rgb(0, 0, 0);
+        }
+        div.css  {
+                color : Orange ;
+                 margin-left:  600px;
+                 margin-top:  25px;
+                 margin-right: 50px;
+                 
+        }
+        div.button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
 <head>
     <title>Service form Server</title>
     <script src="/socket.io/socket.io.js"></script>
@@ -12,37 +49,39 @@
     <h2>Type Exit to closing connection</h2>
     <!-- <h3>Clock</h3> -->
     
-    
-    <input type="text" id="message"> 
-    <button id="enter">enter</button>
-    <div id="output" class = "message"> </div>
-    <div id="clock" class="list-group"></div>
-    <script>
-        var socket = io.connect('http://localhost:3000');
-        socket.on('connect', function (data) {
-            socket.emit('join', 'Hello world from client');
-        });
-        
-        
-        $("#enter").click(function(){
-            socket.emit('send-time-date', $("#message").val());
-            $("#message").val(""); 
-        }); 
+        <div class="css">
+            <input type="text" id="message"> 
+            <button id="enter">enter</button>
+            <div id="output" class = "message"> </div>
+            <div id="clock" class="list-group"></div>
+            <script>
+                var socket = io.connect('http://localhost:3000');
+                socket.on('connect', function (data) {
+                    socket.emit('join', 'Hello world from client');
+                });
+                
+                
+                $("#enter").click(function(){
+                    socket.emit('send-time-date', $("#message").val());
+                    $("#message").val(""); 
+                }); 
+                
+                socket.on('date', function (data) {
+                        $('#output').append(data);
+                    });
+                 <br/>   
+                socket.on('time', function (datatime) {
+                        $('#output').append(datatime);
+                    });
 
-        socket.on('date', function (data) {
-                $('#output').append(data);
-            });
-        socket.on('time', function (datatime) {
-                $('#output').append(datatime);
-            });
-
-        // socket.on('send-time-date', function (data) {  
-            
-        //     $('#output').append($('<li class = "message">').text(data));
-        // });       
-        
-        
-    </script>
+                // socket.on('send-time-date', function (data) {  
+                    
+                //     $('#output').append($('<li class = "message">').text(data));
+                // });       
+                
+                
+            </script>
+        </div>
 </body>
 
 </html>
