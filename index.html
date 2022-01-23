@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Service form Server</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+
+<body>
+    <h1>What do you want? |Date| or |Time|</h1>
+    <h2>Type Exit to closing connection</h2>
+    <!-- <h3>Clock</h3> -->
+    
+    
+    <input type="text" id="message"> 
+    <button id="enter">enter</button>
+    <div id="output" class = "message"> </div>
+    <div id="clock" class="list-group"></div>
+    <script>
+        var socket = io.connect('http://localhost:3000');
+        socket.on('connect', function (data) {
+            socket.emit('join', 'Hello world from client');
+        });
+        
+        
+        $("#enter").click(function(){
+            socket.emit('send-time-date', $("#message").val());
+            $("#message").val(""); 
+        }); 
+
+        socket.on('date', function (data) {
+                $('#output').append(data);
+            });
+        socket.on('time', function (datatime) {
+                $('#output').append(datatime);
+            });
+
+        // socket.on('send-time-date', function (data) {  
+            
+        //     $('#output').append($('<li class = "message">').text(data));
+        // });       
+        
+        
+    </script>
+</body>
+
+</html>
